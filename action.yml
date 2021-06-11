@@ -1,0 +1,43 @@
+name: bryk-io/chart-deploy
+description: Deploy a helm chart
+author: bryk-io
+branding:
+  icon: upload-cloud
+  color: yellow
+inputs:
+  name:
+    description: "Deployment name."
+    required: true
+    default: ""
+  namespace:
+    description: "K8s namespace used for the deployment."
+    required: true
+    default: ""
+  version:
+    description: "Specific application version to deploy. Will be used as image tag."
+    required: false
+    default: ""
+  charts:
+    description: "Relative path to the charts inside the repository."
+    required: false
+    default: "helm/*"
+  atomic:
+    description: "The deployment process rolls back changes made in case of error."
+    required: false
+    default: "no"
+  no-hooks:
+    description: "Prevent hooks from running during install."
+    required: false
+    default: "no"
+  force:
+    description: "Force resource updates through a replacement strategy."
+    required: false
+    default: "no"
+  timeout:
+    description: "Time to wait for any individual Kubernetes operations."
+    required: false
+    default: "5m0s"
+runs:
+  using: docker
+  image: Dockerfile
+  entrypoint: "/bin/chart-deploy"

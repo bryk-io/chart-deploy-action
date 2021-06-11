@@ -1,0 +1,37 @@
+name: deploy
+on:
+  # Manual deployment
+  workflow_dispatch:
+    inputs:
+      deployment:
+        description: 'Deployment name'
+        required: true
+        default: 'echo-server'
+      namespace:
+        description: 'Kubernetes namespace to deploy into'
+        required: true
+      version:
+        description: 'Specific application version to deploy (used as image tag)'
+        required: false
+        default: ''
+jobs:
+  deploy:
+    name: run deployment
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      # Deploy chart
+      - name: Helm chart deployment
+        uses: bryk-io/chart-deploy-action@master
+        with:
+          name: ${{ github.event.inputs.deployment }}
+          namespace: ${{ github.event.inputs.namespace }}
+          version: ${{ github.event.inputs.version }}
+        env:
+          # Use the name space as prefix to load the required secrets
+          KUBECTL_CONFIG: ${{ secrets[format('kubectl_config_{0}', github.event.inputs.namespace)] }}
+          CHART_VALUES: ${{ secrets[format('chart_values_{0}', github.event.inputs.namespace)] }}

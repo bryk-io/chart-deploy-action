@@ -1,0 +1,32 @@
+name: deploy-dev
+on:
+  # To manually run deployments
+  workflow_dispatch:
+    inputs:
+      deployment:
+        description: 'Deployment name'
+        required: true
+        default: 'echo-server-dev'
+jobs:
+  # Deploy helm chart
+  deploy:
+    name: run deployment
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # The environment must be previously setup
+    environment: dev
+    steps:
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      # Deploy chart
+      - name: Helm chart deployment
+        uses: bryk-io/chart-deploy-action@master
+        with:
+          name: ${{ github.event.inputs.deployment }}
+          namespace: dev
+          force: yes
+        env:
+          KUBECTL_CONFIG: ${{ secrets.KUBECTL_CONFIG }}
+          CHART_VALUES: ${{ secrets.CHART_VALUES }}
