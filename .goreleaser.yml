@@ -17,7 +17,7 @@ changelog:
 dockers:
   -
     dockerfile: Dockerfile
-    skip_push: false
+    skip_push: "false"
     extra_files:
       - chart-deploy.sh
     image_templates:

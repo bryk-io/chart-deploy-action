@@ -38,7 +38,7 @@ Sample step configuration.
 ```yaml
 steps:
   - name: Helm chart deployment
-    uses: bryk-io/chart-deploy-action@v1.0.0
+    uses: bryk-io/chart-deploy-action@v1.1.0
     # example with all parameters
     with:
       name: my-deployment     # required
@@ -89,11 +89,11 @@ jobs:
     steps:
       # Checkout code
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # Deploy chart
       - name: Helm chart deployment
-        uses: bryk-io/chart-deploy-action@v1.0.0
+        uses: bryk-io/chart-deploy-action@v1.1.0
         with:
           name: my-deployment
           namespace: dev
@@ -161,11 +161,11 @@ jobs:
     steps:
       # Checkout code
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       
       # Deploy chart
       - name: Helm chart deployment
-        uses: bryk-io/chart-deploy-action@master
+        uses: bryk-io/chart-deploy-action@v1.1.0
         with:
           name: ${{ github.event.inputs.deployment }}
           namespace: ${{ github.event.inputs.namespace }}
