@@ -37,6 +37,10 @@ inputs:
     description: "Time to wait for any individual Kubernetes operations."
     required: false
     default: "5m0s"
+  debug:
+    description: "Enable verbose output."
+    required: false
+    default: "no"
 runs:
   using: docker
   image: Dockerfile

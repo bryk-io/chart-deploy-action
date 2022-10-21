@@ -22,6 +22,9 @@ fi
 if [ "${INPUT_FORCE}" = "yes" ]; then
   EXTRA_ARGS="${EXTRA_ARGS} --force"
 fi
+if [ "${INPUT_DEBUG}" = "yes" ]; then
+  EXTRA_ARGS="${EXTRA_ARGS} --debug"
+fi
 
 # Run deployment operation
 helm upgrade ${INPUT_NAME} ${INPUT_CHARTS} \
@@ -31,5 +34,4 @@ helm upgrade ${INPUT_NAME} ${INPUT_CHARTS} \
 --timeout "${INPUT_TIMEOUT}" \
 --install \
 --cleanup-on-fail \
---wait \
---debug ${EXTRA_ARGS}
+--wait ${EXTRA_ARGS} > /dev/null

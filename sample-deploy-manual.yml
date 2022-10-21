@@ -26,7 +26,7 @@ jobs:
       
       # Deploy chart
       - name: Helm chart deployment
-        uses: bryk-io/chart-deploy-action@v1.1.0
+        uses: bryk-io/chart-deploy-action@v1.2.0
         with:
           name: ${{ github.event.inputs.deployment }}
           namespace: ${{ github.event.inputs.namespace }}
