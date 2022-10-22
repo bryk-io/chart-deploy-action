@@ -13,7 +13,7 @@ jobs:
     name: run deployment
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    # The environment must be previously setup
+    # The environment must be previously created and configured
     environment: dev
     steps:
       # Checkout code

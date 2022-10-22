@@ -1,5 +1,9 @@
 name: deploy
 on:
+  # Automatic deployments on every new release
+  release:
+    types:
+      - 'published'
   # Manual deployment
   workflow_dispatch:
     inputs:
@@ -10,6 +14,7 @@ on:
       namespace:
         description: 'Kubernetes namespace to deploy into'
         required: true
+        default: 'dev'
       version:
         description: 'Specific application version to deploy (used as image tag)'
         required: false
@@ -28,8 +33,8 @@ jobs:
       - name: Helm chart deployment
         uses: bryk-io/chart-deploy-action@v1.2.0
         with:
-          name: ${{ github.event.inputs.deployment }}
-          namespace: ${{ github.event.inputs.namespace }}
+          name: ${{ github.event.inputs.deployment || 'echo-server' }}
+          namespace: ${{ github.event.inputs.namespace || 'dev' }}
           version: ${{ github.event.inputs.version }}
         env:
           # Use the name space as prefix to load the required secrets
